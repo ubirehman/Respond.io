@@ -1,15 +1,14 @@
-const express = require('express');
+const express = require('express')
+const UserController = require('../controllers/UserController')
+const { validateSignup, validateLogin } = require('../middlewares/userValidation')
 
-const router = express.Router();
+const router = express.Router()
+const userController = new UserController()
 
-router.post('/signup', (req, res) => {
-    const { username, password } = req.body;
+// Signup route
+router.post('/signup', validateSignup, userController.signup.bind(userController))
 
-    if (username && password) {
-        return res.status(201).json({ message: 'User registered successfully' });
-    }
+// Login route
+router.post('/login', validateLogin, userController.login.bind(userController))
 
-    res.status(400).json({ message: 'Invalid data' });
-});
-
-module.exports = router;
+module.exports = router
