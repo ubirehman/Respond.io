@@ -1,0 +1,43 @@
+const { z } = require('zod')
+
+// Reusable middleware generator
+function validate(schema) {
+  return (req, res, next) => {
+    const result = schema.safeParse(req.body)
+    if (!result.success) {
+      return res.status(422).json({
+        errors: result.error.errors.map((err) => ({
+          msg: err.message,
+          path: err.path.join('.'),
+        })),
+      })
+    }
+    req.body = result.data // Sanitized data
+    next()
+  }
+}
+
+// Create Note Schema
+const createNoteSchema = z.object({
+  title: z.string().min(2).max(100, 'Note title must be between 2 and 100 characters'),
+  content: z.string().min(2).max(50).optional(),
+  type: z.string().min(2).max(50).optional(),
+})
+
+// Update Note Schema
+const updateNoteSchema = z.object({
+  noteId: z.number({ invalid_type_error: 'Note Id must be a number' }).int().min(1, 'Note Id Must be sent to update it'),
+  title: z.string().min(2).max(100).optional(),
+  content: z.string().min(2).max(500).optional(),
+  type: z.union([z.string().min(2).max(50), z.number().int().min(1).max(2)]).optional(),
+})
+
+// Delete Note Schema
+const deleteNoteSchema = z.object({
+  noteId: z.number().int().min(1, 'Note Id Must be sent to delete it'),
+})
+
+// Export middlewares
+exports.createNotesValidationRules = [validate(createNoteSchema)]
+exports.updateNotesValidationRules = [validate(updateNoteSchema)]
+exports.deleteNotesValidationRules = [validate(deleteNoteSchema)]
