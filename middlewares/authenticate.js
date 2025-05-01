@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
-const UserService = require('../services/UserService') // Replace the path with the correct location of your UserService.js file
+const UserService = require('../services/UserService')
+const logger = require('../utils/logger')
 
 // Authentication middleware
 const authenticate = async (req, res, next) => {
@@ -24,6 +25,7 @@ const authenticate = async (req, res, next) => {
       next()
     } catch (error) {
       // Token is invalid or expired
+      logger.error('Token verification failed:', error)
       return res.status(401).json({ message: 'Invalid or expired token' })
     }
   } else {
