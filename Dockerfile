@@ -1,8 +1,8 @@
 # Use an official Node.js runtime as the base image
 FROM node:20.17.0
 
-RUN apk update && \
-  apk add bash
+# Update and install necessary dependencies
+RUN apt-get update && apt-get install -y bash && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the container
 WORKDIR /var/app
@@ -17,7 +17,7 @@ RUN npm install
 COPY . .
 
 # Expose the port on which your application runs
-EXPOSE 3000
+EXPOSE 4001
 
-# Start the application
-CMD npm run dev
+# Start the application using node instead of nodemon
+CMD ["node", "server.js"]
