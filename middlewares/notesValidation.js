@@ -31,10 +31,7 @@ const typeSchema = z.enum(['Personal', 'Work'], {
 const createNoteSchema = z.object({
   title: z.string().min(2).max(100, 'Note title must be between 2 and 100 characters'),
   content: z.string().min(2).max(50).optional(),
-  type: z.object({
-    content: contentSchema,
-    type: typeSchema
-  })
+  type: typeSchema 
 })
 
 // Update Note Schema
