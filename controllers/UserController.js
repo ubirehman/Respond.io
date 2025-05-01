@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
-const UserService = require('../services/UserService') // Replace the path with the correct location of your UserService.js file
+const UserService = require('../services/UserService'); // Replace the path with the correct location of your UserService.js file
+const logger = require('../utils/logger');
 const userService = new UserService()
 
 /**
@@ -33,7 +34,7 @@ class UserController {
       // Respond with the token and user data
       res.json({ token, user: newUser });
     } catch (error) {
-      console.error('Error during sign up:', error);
+      logger.error('Error during sign up:', error);
       res.status(500).json({ message: 'Sign up failed' });
     }
   }
@@ -66,7 +67,7 @@ class UserController {
       // Respond with the token and user data
       res.json({ token, user });
     } catch (error) {
-      console.error('Error during login:', error);
+      loggerRe.error('Error during login:', error);
       res.status(500).json({ message: 'Login failed' });
     }
   }
