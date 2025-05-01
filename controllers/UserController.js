@@ -67,7 +67,7 @@ class UserController {
       // Respond with the token and user data
       res.json({ token, user });
     } catch (error) {
-      loggerRe.error('Error during login:', error);
+      logger.error('Error during login:', error);
       res.status(500).json({ message: 'Login failed' });
     }
   }
