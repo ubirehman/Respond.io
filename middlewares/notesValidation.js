@@ -36,13 +36,8 @@ const createNoteSchema = z.object({
 
 // Update Note Schema
 const updateNoteSchema = z.object({
-  noteId: z.number({ invalid_type_error: 'Note Id must be a number' }).int().min(1, 'Note Id Must be sent to update it'),
   title: z.string().min(2).max(100).optional(),
   content: z.string().min(2).max(500).optional(),
-  type: z.object({
-    content: contentSchema,
-    type: typeSchema
-  })
 })
 
 // Delete Note Schema
