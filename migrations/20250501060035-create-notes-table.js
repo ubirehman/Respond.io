@@ -1,5 +1,5 @@
 'use strict';
-const { NOTE: TYPE } = require('../utils/constants')
+const { NOTE: TYPE } = require('../utils/constants');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -19,7 +19,10 @@ module.exports = {
         allowNull: true
       },
       type: {
-        type: Sequelize.ENUM(TYPE.PERSONAL, TYPE.WORK), 
+        type: Sequelize.STRING,
+        validate: {
+          isIn: [[TYPE.PERSONAL, TYPE.WORK]]
+        },
         allowNull: false,
         defaultValue: TYPE.PERSONAL
       },
@@ -54,8 +57,7 @@ module.exports = {
       onUpdate: 'CASCADE'
     });
   },
-
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.removeConstraint('notes', 'notes_userId_fk');
     await queryInterface.dropTable('notes');
   }

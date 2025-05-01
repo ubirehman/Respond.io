@@ -25,7 +25,7 @@ class UserController {
       }
 
       // Create a new user
-      const newUser = await userService.createUser({ username, email, password });
+      const newUser = await userService.createUser({ email, password });
 
       // Generate JWT token
       const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET_KEY);
