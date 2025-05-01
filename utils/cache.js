@@ -1,4 +1,4 @@
-const redis = require("redis");
+const { createClient } = require('redis');
 require("dotenv").config();
 
 class Cache {
@@ -7,9 +7,20 @@ class Cache {
     }
 }
 
-const redisClient = redis.createClient({
-    url: process.env.REDIS_URL,
-    password: process.env.REDIS_PASSWORD 
+const redisClient = createClient({
+    socket: {
+        host:  process.env.REDIS_HOST, 
+        port: 14231
+    },
+    password: process.env.REDIS_PASSWORD
+});
+
+redisClient.on('connect', () => {
+    console.log('Redis client connected successfully');
+});
+
+redisClient.on('error', (err) => {
+    console.error('Redis client connection error:', err);
 });
 
 redisClient.connect();
