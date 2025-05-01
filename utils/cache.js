@@ -9,6 +9,7 @@ class Cache {
 
 const redisClient = redis.createClient({
     url: process.env.REDIS_URL,
+    password: process.env.REDIS_PASSWORD 
 });
 
 redisClient.connect();
