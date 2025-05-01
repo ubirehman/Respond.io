@@ -17,11 +17,24 @@ function validate(schema) {
   }
 }
 
+const contentSchema = z.string()
+  .trim()
+  .min(2, 'Note content characters over the limit')
+  .max(2000, 'Note content characters over the limit')
+  .optional()
+
+const typeSchema = z.enum(['Personal', 'Work'], {
+  errorMap: () => ({ message: 'Invalid note type' })
+})
+
 // Create Note Schema
 const createNoteSchema = z.object({
   title: z.string().min(2).max(100, 'Note title must be between 2 and 100 characters'),
   content: z.string().min(2).max(50).optional(),
-  type: z.string().min(2).max(50).optional(),
+  type: z.object({
+    content: contentSchema,
+    type: typeSchema
+  })
 })
 
 // Update Note Schema
@@ -29,7 +42,10 @@ const updateNoteSchema = z.object({
   noteId: z.number({ invalid_type_error: 'Note Id must be a number' }).int().min(1, 'Note Id Must be sent to update it'),
   title: z.string().min(2).max(100).optional(),
   content: z.string().min(2).max(500).optional(),
-  type: z.union([z.string().min(2).max(50), z.number().int().min(1).max(2)]).optional(),
+  type: z.object({
+    content: contentSchema,
+    type: typeSchema
+  })
 })
 
 // Delete Note Schema
