@@ -18,7 +18,7 @@ This project is a backend API for managing notes. It supports user authenticatio
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ubirehman/Respond.io
    cd Respond.io
    ```
 
