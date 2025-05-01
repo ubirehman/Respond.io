@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/database')
 const User = require('./user')
+const { NOTE } = require('../utils/constants')
 
 const Notes = sequelize.define('Notes', {
   id: {
@@ -18,9 +19,9 @@ const Notes = sequelize.define('Notes', {
     allowNull: true
   },
   type: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.ENUM(NOTE.TYPE.PERSONAL, NOTE.TYPE.WORK),
     allowNull: false,
-    defaultValue: 1 // 1 for personal, 2 for work
+    defaultValue: NOTE.TYPE.PERSONAL
   },
   userId: {
     allowNull: false,
@@ -39,7 +40,7 @@ const Notes = sequelize.define('Notes', {
     type: DataTypes.DATE
   }
 }, {
-  tableName: 'companies' // Specify the table name
+  tableName: 'notes' // Specify the table name
 })
 
 // Define the association with User
