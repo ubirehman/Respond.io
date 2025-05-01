@@ -30,10 +30,10 @@ services:
     image: redis
     ports:
       - '5010:5010'
-    volumes:
-      - './storage/redis/.data/:/data'
     command:
       - redis-server
       - '--port 5010'
       - '--appendonly'
       - 'yes'
+    environment:
+      - REDIS_URL=redis://redis-14231.c277.us-east-1-3.ec2.redns.redis-cloud.com:14231

@@ -1,4 +1,5 @@
 const redis = require("redis");
+require("dotenv").config();
 
 class Cache {
     constructor(client) {
@@ -6,11 +7,9 @@ class Cache {
     }
 }
 
-const redisClient = redis.createClient({ socket: {
-    port: 5010,
-    host: "cache",
-    password: ""
-}});
+const redisClient = redis.createClient({
+    url: process.env.REDIS_URL,
+});
 
 redisClient.connect();
 
