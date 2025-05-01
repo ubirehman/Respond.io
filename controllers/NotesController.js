@@ -107,6 +107,23 @@ class NotesController {
       res.status(500).json({ message: 'Failed to delete Note' });
     }
   }
+
+  /**
+   * Searches notes by keywords.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} - The JSON response containing the search results.
+   */
+  async searchNotesByKeyword(req, res) {
+    const { keyword } = req.query;
+    try {
+      const notes = await notesService.searchNotesByKeyword(keyword);
+      res.json(notes);
+    } catch (error) {
+      logger.error(error);
+      res.status(500).json({ message: 'Failed to search notes' });
+    }
+  }
 }
 
 module.exports = NotesController

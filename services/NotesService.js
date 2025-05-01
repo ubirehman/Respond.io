@@ -24,6 +24,10 @@ class NotesService {
   async deleteNoteById (noteId, userId) {
     return this.NotesRepository.deleteNoteById(noteId, userId)
   }
+
+  async searchNotesByKeyword(keyword) {
+    return this.NotesRepository.searchNotesByKeyword(keyword);
+  }
 }
 
 module.exports = NotesService

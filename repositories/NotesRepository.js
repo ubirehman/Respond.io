@@ -1,3 +1,4 @@
+const sequelize = require('../config/database');
 const Notes = require('../models/notes')
 const RedisClient = require('../utils/cache')
 
@@ -41,6 +42,12 @@ class NotesRepository {
       logger.error(error)
       throw error
     }
+  }
+
+  async searchNotesByKeyword(keyword) {
+    return Notes.findAll({
+      where: sequelize.literal(`MATCH (title, content) AGAINST ('${keyword}' IN NATURAL LANGUAGE MODE)`)
+    });
   }
 }
 
