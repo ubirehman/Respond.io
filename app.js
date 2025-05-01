@@ -2,6 +2,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const log = require('./utils/logger'); // Assuming you have a logger utility
+
 // Routes
 const routes = require('./routes/index');
 
@@ -20,7 +22,7 @@ app.use('/api', routes); // Adjust the base path as per your preference
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  logger.error(err); // Log the error
+  log.error(err); // Log the error
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
