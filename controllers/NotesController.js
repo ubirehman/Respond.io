@@ -1,5 +1,6 @@
 const NotesService = require('../services/NotesService')
 const NoteFactory = require('../factory/NoteFactory')
+const logger = require('../utils/logger')
 const notesService = new NotesService()
 /**
  * The NotesController class handles requests related to notes.
