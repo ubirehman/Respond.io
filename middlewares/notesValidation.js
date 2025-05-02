@@ -40,12 +40,7 @@ const updateNoteSchema = z.object({
   content: z.string().min(2).max(500).optional(),
 })
 
-// Delete Note Schema
-const deleteNoteSchema = z.object({
-  noteId: z.number().int().min(1, 'Note Id Must be sent to delete it'),
-})
 
 // Export middlewares
 exports.createNotesValidationRules = [validate(createNoteSchema)]
 exports.updateNotesValidationRules = [validate(updateNoteSchema)]
-exports.deleteNotesValidationRules = [validate(deleteNoteSchema)]
